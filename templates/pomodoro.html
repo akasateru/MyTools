@@ -12,8 +12,8 @@
     <h1>ポモドーロタイマー</h1>
     <p>説明：25分間の作業と5分間の休憩を繰り返します。作業中は他のことを考えず作業に集中します。作業中に思いついたことはメモに残し5分間の休憩を使って消費します。</p>
     <div>
-      <span id="state"> </span>
-      <div id="timer"> 
+      <span id="state">停止中</span>
+      <div id="timer">
         <span id="minits">25</span>:<span id="seconds">00</span>
       </div>
       <div id="buttons">
@@ -22,6 +22,8 @@
         <button id="reset" type="button" class="btn btn-outline-success">Reset</button>
       </div>
     </div>
+    <h5>達成目標</h5>
+    <textarea id="memo" cols="100" rows="5"></textarea>
   </main>
   <audio src="{{ url_for('static', filename='music/魔法具の館.mp3')}}" loop id="audio"></audio>
   <script src="{{ url_for('static', filename='js/pomodoro.js')}}"></script>

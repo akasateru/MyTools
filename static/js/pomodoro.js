@@ -1,5 +1,5 @@
 let whileWorking = true;
-let time=3;
+let time=1500;
 minits = document.getElementById("minits");
 seconds = document.getElementById("seconds");
 state = document.getElementById("state");
@@ -15,7 +15,7 @@ function DisplayTimer(){
     document.getElementById("audio").play();
     setTimeout(() => audio.pause(), 4000);
     if (whileWorking){
-      time=3;
+      time=300;
       whileWorking=false;
       state.textContent = "休憩中";
     }
@@ -32,7 +32,6 @@ function DisplayTimer(){
 
 function StartTimer(){
   timerInterval = setInterval(DisplayTimer,1000);
-  // document.body.requestFullscreen();
   state.textContent = "作業中";
   startButton.disabled = true;
   stopButton.disabled = false;
@@ -41,6 +40,7 @@ function StartTimer(){
 
 function StopTimer(){
   clearInterval(timerInterval)
+  state.textContent = "停止中";
   startButton.disabled = false;
   stopButton.disabled = true;
   resetButton.disabled = false;
@@ -49,7 +49,7 @@ function StopTimer(){
 function ResetTimer(){
   time=1500;
   whileWorking=true;
-  state.textContent = "";
+  state.textContent = "停止中";
   startButton.disabled = false;
   stopButton.disabled = true;
   resetButton.disabled = true;
