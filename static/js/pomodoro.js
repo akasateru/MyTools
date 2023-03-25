@@ -12,6 +12,8 @@ resetButton.disabled = true;
 
 function DisplayTimer(){
   if (time<=1){
+    document.getElementById("audio").play();
+    setTimeout(() => audio.pause(), 4000);
     if (whileWorking){
       time=3;
       whileWorking=false;
@@ -30,6 +32,7 @@ function DisplayTimer(){
 
 function StartTimer(){
   timerInterval = setInterval(DisplayTimer,1000);
+  // document.body.requestFullscreen();
   state.textContent = "作業中";
   startButton.disabled = true;
   stopButton.disabled = false;
