@@ -1,63 +1,46 @@
-let whileWorking = true;
-let time=1500;
-minits = document.getElementById("minits");
-seconds = document.getElementById("seconds");
+timer = document.getElementById("timer");
 state = document.getElementById("state");
-startButton = document.getElementById("start");
-stopButton = document.getElementById("stop");
-resetButton = document.getElementById("reset");
-startButton.disabled = false;
-stopButton.disabled = true;
-resetButton.disabled = true;
 
 function DisplayTimer(){
-  if (time<=1){
-    document.getElementById("audio").play();
-    setTimeout(() => audio.pause(), 4000);
-    if (whileWorking){
-      time=300;
-      whileWorking=false;
-      state.textContent = "休憩中";
-    }
-    else{
-      time=1501;
-      whileWorking=true;
-      state.textContent = "作業中";
-    }
+  const now = new Date();
+  seconds = String(59-now.getSeconds()).padStart(2,"0");
+  if (now.getMinutes()<30){
+    nowMinutes = now.getMinutes();
   }
-  time--;
-  minits.textContent = String(Math.floor(time/60)).padStart(2,"0");
-  seconds.textContent = String(Math.floor(time%60)).padStart(2,"0");
+  else{
+    nowMinutes = now.getMinutes()-30;
+  }
+  
+  if (nowMinutes<25){
+    timer.textContent = String(24-nowMinutes).padStart(2,"0")+":"+seconds;
+    state.textContent = "作業中";
+    document.getElementById("timer").style.color = "black";
+  }
+  else{
+    timer.textContent = String(29-nowMinutes).padStart(2,"0")+":"+seconds;
+    state.textContent = "休憩中";
+    document.getElementById("timer").style.color = "green";
+  }
+
+  if ((nowMinutes==25 && now.getSeconds()==0) || (nowMinutes==0 && now.getSeconds()==0)){
+    document.getElementById("audio").play();
+    setTimeout(() => audio.pause(), 5000);
+  }
+  // フルスクリーンかどうかを判定しCSSを変更
+  if (document.fullscreenElement){
+    document.getElementById("timer").style.fontSize = "2000%";
+  }
+  else{
+    document.getElementById("timer").style.fontSize = "1000%";
+  }
 }
 
-function StartTimer(){
-  timerInterval = setInterval(DisplayTimer,1000);
-  state.textContent = "作業中";
-  startButton.disabled = true;
-  stopButton.disabled = false;
-  resetButton.disabled = false;
+setInterval(DisplayTimer,1);
+
+fullscreen_button = document.getElementById("fullscreen_button");
+
+function FullScreen(){
+  document.getElementById("timer").requestFullscreen();
 }
 
-function StopTimer(){
-  clearInterval(timerInterval)
-  state.textContent = "停止中";
-  startButton.disabled = false;
-  stopButton.disabled = true;
-  resetButton.disabled = false;
-}
-
-function ResetTimer(){
-  time=1500;
-  whileWorking=true;
-  state.textContent = "停止中";
-  startButton.disabled = false;
-  stopButton.disabled = true;
-  resetButton.disabled = true;
-  clearInterval(timerInterval)
-  minits.textContent = String(Math.floor(time/60)).padStart(2,"0");
-  seconds.textContent = String(Math.floor(time%60)).padStart(2,"0");
-}
-
-startButton.addEventListener("click",StartTimer)
-stopButton.addEventListener("click",StopTimer)
-resetButton.addEventListener("click",ResetTimer)
+fullscreen_button.addEventListener("click", FullScreen);
