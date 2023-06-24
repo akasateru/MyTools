@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, redirect, url_for
 
 
 app = Flask(__name__)
@@ -6,13 +6,13 @@ app = Flask(__name__)
 
 @app.route("/")
 def hello_world():
-  return render_template("top.html")
+  return redirect(url_for('pomodoro'))
 
 
 @app.route('/pomodoro')
-def projects():
+def pomodoro():
   return render_template("pomodoro.html")
 
 
 if __name__ == "__main__":
-  app.run(host="0.0.0.0", port=5000, debug=True)
+  app.run(host="0.0.0.0", port=5000)
